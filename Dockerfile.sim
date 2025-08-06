@@ -1,0 +1,13 @@
+# Usar uma imagem Docker com a versão antiga do Node.js que o simulador precisa
+FROM node:6.9.2-alpine
+
+# Instalar o git para poder clonar o repositório do simulador
+RUN apk add --no-cache git
+
+# Clonar o simulador e instalar suas dependências dentro do contêiner
+RUN git clone https://github.com/genieacs/genieacs-sim.git /app
+WORKDIR /app
+RUN npm install
+
+# Comando para iniciar o simulador quando o contêiner for executado
+CMD ["./genieacs-sim"]

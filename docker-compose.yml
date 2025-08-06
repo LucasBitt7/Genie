@@ -1,0 +1,110 @@
+version: "3.9"
+
+###############################################################################
+# GenieACS – serviços principais                                              #
+###############################################################################
+services:
+  genieacs:
+    image: drumsergio/genieacs:latest
+    container_name: genieacs
+    restart: always
+    depends_on:
+      - mongo
+    environment:
+      GENIEACS_UI_JWT_SECRET: changeme
+      GENIEACS_MONGODB_CONNECTION_URL: mongodb://mongo/genieacs?authSource=admin
+      DEBUG: "cwmp:*"
+    ports:
+      - "7547:7547"   # CWMP – onde os CPEs se conectam
+      - "7557:7557"   # NBI  – REST API usada pelo backend
+      - "7567:7567"   # File-Server (firmware, etc.)
+      - "3000:3000"   # Interface Web
+    networks:
+      - genieacs_net
+
+###############################################################################
+# MongoDB                                                                     #
+###############################################################################
+  mongo:
+    image: mongo:8.0
+    container_name: mongo-genieacs
+    restart: always
+    volumes:
+      - data_db:/data/db
+      - data_configdb:/data/configdb
+    expose:
+      - "27017"
+    networks:
+      - genieacs_net
+
+###############################################################################
+# Simulador CPE – 5 roteadores no mesmo contêiner                             #
+###############################################################################
+  genieacs-sim:
+    image: drumsergio/genieacs-sim:latest
+    depends_on:
+      - genieacs
+    command: >-
+      genieacs-sim --processes 5 --serial 100 --acs-url http://genieacs:7547
+    restart: on-failure
+    networks:
+      - genieacs_net
+
+###############################################################################
+# MCP – painel multi-provedor (opcional)                                      #
+###############################################################################
+  genieacs-mcp:
+    image: drumsergio/genieacs-mcp:latest
+    container_name: genieacs-mcp
+    depends_on:
+      - genieacs
+    environment:
+      ACS_URL:  http://genieacs:7557
+      ACS_USER: admin
+      ACS_PASS: admin
+    ports:
+      - "8080:8080"
+    networks:
+      - genieacs_net
+
+###############################################################################
+# Backend FastAPI                                                             #
+###############################################################################
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: genieacs-backend
+    restart: always
+    depends_on:
+      - genieacs
+    environment:
+      GENIEACS_NBI_URL: http://genieacs:7557
+      GENIEACS_API_KEY_FILE: /run/secrets/genieacs_api_key   # ← opcional (usado pelo entrypoint)
+    secrets:
+      - genieacs_api_key                                     # ← vínculo do secret ao serviço
+    ports:
+      - "8000:8000"           # docs em http://localhost:8000/docs
+    networks:
+      - genieacs_net
+
+###############################################################################
+# Volumes persistentes                                                        #
+###############################################################################
+volumes:
+  data_db:
+  data_configdb:
+
+###############################################################################
+# Rede compartilhada                                                          #
+###############################################################################
+networks:
+  genieacs_net:
+    driver: bridge
+
+###############################################################################
+# Segredo com a API-Key                                                       #
+###############################################################################
+secrets:
+  genieacs_api_key:
+    file: ./secrets/genieacs_api_key.txt
