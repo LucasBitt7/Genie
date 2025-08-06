@@ -35,6 +35,18 @@ As an alternative, for Kubernetes clusters, there is the option to deploy it via
 helmfile -f genieacs-deploy-helmfile/helmfile.yaml -i apply
 ```
 
+## Running task scripts
+
+Some utility scripts live under `tasks/` and communicate with the backend.
+These scripts read configuration from a `.env` file. Copy the example file
+and set your API key before running any script:
+
+```bash
+cp .env.example .env
+# edite .env e defina ACS_API_KEY
+python tasks/<script>.py
+```
+
 ## Maintainers
 
 [@GeiserX](https://github.com/GeiserX).
