@@ -16,7 +16,9 @@ except Exception:
 # ---------------------------------------------------------------------
 # Config
 BACKEND_URL: str = os.getenv("ACS_BACKEND_URL", "http://localhost:8000")
-API_KEY: str = os.getenv("ACS_API_KEY", "")
+API_KEY: str = os.getenv("ACS_API_KEY")
+if not API_KEY:
+    raise RuntimeError("ACS_API_KEY environment variable must be set")
 
 
 # ---------------------------------------------------------------------
@@ -26,8 +28,9 @@ def _post(endpoint: str, payload: dict, params: Optional[dict] = None) -> dict:
     Envia POST ao backend e devolve JSON (levanta exceção para HTTP≠2xx).
     """
     url = f"{BACKEND_URL}{endpoint}"
-    headers = {"X-API-Key": API_KEY} if API_KEY else None
-    resp = requests.post(url, json=payload, params=params, headers=headers)
+    resp = requests.post(
+        url, json=payload, params=params, headers={"X-API-Key": API_KEY}
+    )
     resp.raise_for_status()
     return resp.json()
 
