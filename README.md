@@ -47,6 +47,8 @@ cp .env.example .env
 python tasks/<script>.py
 ```
 
+The scripts will terminate early if `ACS_API_KEY` is not defined.
+
 ## Maintainers
 
 [@GeiserX](https://github.com/GeiserX).
