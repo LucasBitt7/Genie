@@ -7,9 +7,16 @@ from typing import List, Optional
 import os
 import requests
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except Exception:
+    pass
+
 # ---------------------------------------------------------------------
 # Config
 BACKEND_URL: str = os.getenv("ACS_BACKEND_URL", "http://localhost:8000")
+API_KEY: str = os.getenv("ACS_API_KEY", "")
 
 
 # ---------------------------------------------------------------------
@@ -19,7 +26,8 @@ def _post(endpoint: str, payload: dict, params: Optional[dict] = None) -> dict:
     Envia POST ao backend e devolve JSON (levanta exceção para HTTP≠2xx).
     """
     url = f"{BACKEND_URL}{endpoint}"
-    resp = requests.post(url, json=payload, params=params)
+    headers = {"X-API-Key": API_KEY} if API_KEY else None
+    resp = requests.post(url, json=payload, params=params, headers=headers)
     resp.raise_for_status()
     return resp.json()
 
