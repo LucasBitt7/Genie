@@ -48,7 +48,7 @@ function parameters documented below.
 import os
 from typing import List, Optional
 
-import requests
+import httpx
 from fastapi import Depends, FastAPI, HTTPException, Security, status
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
@@ -148,7 +148,7 @@ app = FastAPI(title="GenieACS MVP Backend",
               version="0.1.0")
 
 
-def send_task(device_id: str, task_body: dict, connection_request: bool = False) -> dict:
+async def send_task(device_id: str, task_body: dict, connection_request: bool = False) -> dict:
     """Send a task to the GenieACS NBI and return the resulting task object.
 
     Args:
@@ -179,7 +179,8 @@ def send_task(device_id: str, task_body: dict, connection_request: bool = False)
     # details【757314803093476†L155-L167】.
     params = {} if not connection_request else {"connection_request": ""}
     try:
-        response = requests.post(url, params=params, json=task_body)
+        async with httpx.AsyncClient() as client:
+            response = await client.post(url, params=params, json=task_body)
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
@@ -194,7 +195,7 @@ def send_task(device_id: str, task_body: dict, connection_request: bool = False)
 
 
 @app.post("/devices/{device_id}/wifi")
-def change_wifi(
+async def change_wifi(
     device_id: str,
     credentials: WifiCredentials,
     parameter_ssid: str = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID",
@@ -228,11 +229,11 @@ def change_wifi(
             [parameter_password, credentials.password, "xsd:string"],
         ],
     }
-    return send_task(device_id, task_body, connection_request)
+    return await send_task(device_id, task_body, connection_request)
 
 
 @app.post("/devices/{device_id}/pppoe")
-def change_pppoe(
+async def change_pppoe(
     device_id: str,
     credentials: PPPoECredentials,
     enable: Optional[bool] = True,
@@ -271,11 +272,11 @@ def change_pppoe(
         "name": "setParameterValues",
         "parameterValues": parameter_values,
     }
-    return send_task(device_id, task_body, connection_request)
+    return await send_task(device_id, task_body, connection_request)
 
 
 @app.post("/devices/{device_id}/reboot")
-def reboot_device(
+async def reboot_device(
     device_id: str,
     connection_request: bool = True,
     _: str = Depends(get_api_key),
@@ -292,11 +293,11 @@ def reboot_device(
         JSON representation of the created task.
     """
     task_body = {"name": "reboot"}
-    return send_task(device_id, task_body, connection_request)
+    return await send_task(device_id, task_body, connection_request)
 
 
 @app.post("/devices/{device_id}/factory_reset")
-def factory_reset(
+async def factory_reset(
     device_id: str,
     connection_request: bool = True,
     _: str = Depends(get_api_key),
@@ -313,11 +314,11 @@ def factory_reset(
         JSON representation of the created task.
     """
     task_body = {"name": "factoryReset"}
-    return send_task(device_id, task_body, connection_request)
+    return await send_task(device_id, task_body, connection_request)
 
 
 @app.post("/devices/{device_id}/parameters")
-def get_parameters(
+async def get_parameters(
     device_id: str,
     request: ParameterRequest,
     connection_request: bool = True,
@@ -342,4 +343,4 @@ def get_parameters(
         "name": "getParameterValues",
         "parameterNames": request.parameter_names,
     }
-    return send_task(device_id, task_body, connection_request)
+    return await send_task(device_id, task_body, connection_request)
