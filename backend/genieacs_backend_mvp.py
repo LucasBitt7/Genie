@@ -4,15 +4,15 @@ genieacs_backend_mvp.py
 
 Pequena API FastAPI que encapsula tarefas do GenieACS (NBI) para operações
 comuns em CPEs: alterar Wi-Fi, atualizar PPPoE, reboot, factory reset e leitura
-de parâmetros. Inclui CORS e rotas OPTIONS explícitas para suportar preflight
-de navegadores modernos sem erro 405.
+de parâmetros. Inclui CORS e suporte a preflight para evitar erros 405 nos
+navegadores.
 """
 
 from typing import List, Optional
 import os
 import httpx
 
-from fastapi import Depends, FastAPI, HTTPException, Security, status
+from fastapi import Depends, FastAPI, HTTPException, Security, status, Request
 from fastapi.security import APIKeyHeader
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
@@ -39,8 +39,12 @@ _env = os.getenv("FRONTEND_ORIGINS")
 ALLOWED_ORIGINS = [o.strip() for o in _env.split(",")] if _env else DEFAULT_FRONT_ORIGINS
 
 
-def get_api_key(api_key_header: str = Security(api_key_header)) -> str:
-    """Valida a API Key recebida via header X-API-Key."""
+def get_api_key(
+    request: Request, api_key_header: str = Security(api_key_header)
+) -> str:
+    """Valida a API Key, liberando preflight OPTIONS sem autenticação."""
+    if request.method == "OPTIONS":
+        return ""
     if api_key_header == API_KEY:
         return api_key_header
     raise HTTPException(
@@ -124,45 +128,22 @@ async def send_task(device_id: str, task_body: dict, connection_request: bool = 
     return response.json()
 
 
-# ---------------------------------------------------------------------------
-# Rotas OPTIONS explícitas (preflight CORS por endpoint)
-
-@app.options("/devices/{device_id}/wifi")
-def _opt_wifi(device_id: str):
-    return Response(status_code=200)
-
-@app.options("/devices/{device_id}/pppoe")
-def _opt_pppoe(device_id: str):
-    return Response(status_code=200)
-
-@app.options("/devices/{device_id}/reboot")
-def _opt_reboot(device_id: str):
-    return Response(status_code=200)
-
-@app.options("/devices/{device_id}/factory_reset")
-def _opt_factory(device_id: str):
-    return Response(status_code=200)
-
-@app.options("/devices/{device_id}/parameters")
-def _opt_params(device_id: str):
-    return Response(status_code=200)
 
 
-# ---------------------------------------------------------------------------
-# Endpoints de negócio
-
-@app.post("/devices/{device_id}/wifi")
+@app.api_route("/devices/{device_id}/wifi", methods=["POST", "OPTIONS"])
 async def change_wifi(
     device_id: str,
-    credentials: WifiCredentials,
+    request: Request,
+    credentials: Optional[WifiCredentials] = None,
     parameter_ssid: str = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.SSID",
     parameter_password: str = "InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.PreSharedKey.1.PreSharedKey",
     connection_request: bool = True,
     _: str = Depends(get_api_key),
 ) -> dict:
-    """
-    Altera SSID e senha Wi-Fi do CPE com uma única task `setParameterValues`.
-    """
+    if request.method == "OPTIONS":
+        return Response(status_code=200)
+    if credentials is None:
+        raise HTTPException(status_code=400, detail="Missing Wi-Fi credentials")
     task_body = {
         "name": "setParameterValues",
         "parameterValues": [
@@ -173,10 +154,11 @@ async def change_wifi(
     return await send_task(device_id, task_body, connection_request)
 
 
-@app.post("/devices/{device_id}/pppoe")
+@app.api_route("/devices/{device_id}/pppoe", methods=["POST", "OPTIONS"])
 async def change_pppoe(
     device_id: str,
-    credentials: PPPoECredentials,
+    request: Request,
+    credentials: Optional[PPPoECredentials] = None,
     enable: Optional[bool] = True,
     parameter_username: str = "InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.Username",
     parameter_password: str = "InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.Password",
@@ -184,59 +166,66 @@ async def change_pppoe(
     connection_request: bool = True,
     _: str = Depends(get_api_key),
 ) -> dict:
-    """
-    Atualiza credenciais PPPoE (e opcionalmente habilita a interface).
-    """
+    if request.method == "OPTIONS":
+        return Response(status_code=200)
+    if credentials is None:
+        raise HTTPException(status_code=400, detail="Missing PPPoE credentials")
     parameter_values = [
         [parameter_username, credentials.username, "xsd:string"],
         [parameter_password, credentials.password, "xsd:string"],
     ]
     if enable is not None:
         parameter_values.append([parameter_enable, enable, "xsd:boolean"])
-
     task_body = {"name": "setParameterValues", "parameterValues": parameter_values}
     return await send_task(device_id, task_body, connection_request)
 
 
-@app.post("/devices/{device_id}/reboot")
+@app.api_route("/devices/{device_id}/reboot", methods=["POST", "OPTIONS"])
 async def reboot_device(
     device_id: str,
+    request: Request,
     connection_request: bool = True,
     _: str = Depends(get_api_key),
 ) -> dict:
-    """
-    Reinicia o CPE imediatamente (com connection_request) ou na próxima inform.
-    """
+    if request.method == "OPTIONS":
+        return Response(status_code=200)
     task_body = {"name": "reboot"}
     return await send_task(device_id, task_body, connection_request)
 
 
-@app.post("/devices/{device_id}/factory_reset")
+@app.api_route("/devices/{device_id}/factory_reset", methods=["POST", "OPTIONS"])
 async def factory_reset(
     device_id: str,
+    request: Request,
     connection_request: bool = True,
     _: str = Depends(get_api_key),
 ) -> dict:
-    """
-    Restaura o CPE para os padrões de fábrica.
-    """
+    if request.method == "OPTIONS":
+        return Response(status_code=200)
     task_body = {"name": "factoryReset"}
     return await send_task(device_id, task_body, connection_request)
 
 
-@app.post("/devices/{device_id}/parameters")
+@app.api_route("/devices/{device_id}/parameters", methods=["POST", "OPTIONS"])
 async def get_parameters(
     device_id: str,
-    request: ParameterRequest,
+    request: Request,
+    param_req: Optional[ParameterRequest] = None,
     connection_request: bool = True,
     _: str = Depends(get_api_key),
 ) -> dict:
-    """
-    Solicita leitura de parâmetros arbitrários via `getParameterValues`.
-    Depois, os valores podem ser consultados no `GET /devices` do NBI.
-    """
+    if request.method == "OPTIONS":
+        return Response(status_code=200)
+    if not param_req:
+        raise HTTPException(status_code=400, detail="Missing parameter names")
     task_body = {
         "name": "getParameterValues",
-        "parameterNames": request.parameter_names,
+        "parameterNames": param_req.parameter_names,
     }
     return await send_task(device_id, task_body, connection_request)
+
+
+@app.options("/{full_path:path}")
+async def generic_options(full_path: str) -> Response:
+    """Retorna 200 para qualquer requisição OPTIONS não mapeada."""
+    return Response(status_code=200)
