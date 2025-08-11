@@ -2,7 +2,7 @@
 import time
 import acs_client as acs
 
-DEVICE = "202BC1-BM632w-000100"
+DEVICE = "202BC1-BM632w-000102"
 
 # muda Wi-Fi e reinicia
 acs.wifi(DEVICE, ssid="PromocaoISP", password="senhaNova")
