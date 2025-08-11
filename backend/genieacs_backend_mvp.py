@@ -39,8 +39,12 @@ _env = os.getenv("FRONTEND_ORIGINS")
 ALLOWED_ORIGINS = [o.strip() for o in _env.split(",")] if _env else DEFAULT_FRONT_ORIGINS
 
 
-def get_api_key(api_key_header: str = Security(api_key_header)) -> str:
-    """Valida a API Key recebida via header X-API-Key."""
+def get_api_key(
+    request: Request, api_key_header: str = Security(api_key_header)
+) -> str:
+    """Valida a API Key, liberando preflight OPTIONS sem autenticação."""
+    if request.method == "OPTIONS":
+        return ""
     if api_key_header == API_KEY:
         return api_key_header
     raise HTTPException(
@@ -219,3 +223,9 @@ async def get_parameters(
         "parameterNames": param_req.parameter_names,
     }
     return await send_task(device_id, task_body, connection_request)
+
+
+@app.options("/{full_path:path}")
+async def generic_options(full_path: str) -> Response:
+    """Retorna 200 para qualquer requisição OPTIONS não mapeada."""
+    return Response(status_code=200)
