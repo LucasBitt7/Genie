@@ -22371,6 +22371,8 @@ var _factoryReset = require("./pages/FactoryReset");
 var _factoryResetDefault = parcelHelpers.interopDefault(_factoryReset);
 var _params = require("./pages/Params");
 var _paramsDefault = parcelHelpers.interopDefault(_params);
+var _dashboardLive = require("./pages/DashboardLive");
+var _dashboardLiveDefault = parcelHelpers.interopDefault(_dashboardLive);
 var _s = $RefreshSig$();
 const ApiKeyContext = /*#__PURE__*/ (0, _react.createContext)();
 function App() {
@@ -22393,7 +22395,7 @@ function App() {
             children: [
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navBarDefault.default), {}, void 0, false, {
                     fileName: "src/App.js",
-                    lineNumber: 30,
+                    lineNumber: 33,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Switch), {
@@ -22403,15 +22405,15 @@ function App() {
                             component: (0, _configDefault.default)
                         }, void 0, false, {
                             fileName: "src/App.js",
-                            lineNumber: 32,
+                            lineNumber: 35,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                            path: "/cadastrar",
-                            component: (0, _cadastrarDefault.default)
+                            path: "/dashboard-live",
+                            component: (0, _dashboardLiveDefault.default)
                         }, void 0, false, {
                             fileName: "src/App.js",
-                            lineNumber: 33,
+                            lineNumber: 37,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -22419,7 +22421,7 @@ function App() {
                             component: (0, _wifiDefault.default)
                         }, void 0, false, {
                             fileName: "src/App.js",
-                            lineNumber: 34,
+                            lineNumber: 38,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -22427,7 +22429,7 @@ function App() {
                             component: (0, _pppoeDefault.default)
                         }, void 0, false, {
                             fileName: "src/App.js",
-                            lineNumber: 35,
+                            lineNumber: 39,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -22435,7 +22437,7 @@ function App() {
                             component: (0, _rebootDefault.default)
                         }, void 0, false, {
                             fileName: "src/App.js",
-                            lineNumber: 36,
+                            lineNumber: 40,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -22443,15 +22445,7 @@ function App() {
                             component: (0, _factoryResetDefault.default)
                         }, void 0, false, {
                             fileName: "src/App.js",
-                            lineNumber: 37,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                            path: "/params",
-                            component: (0, _paramsDefault.default)
-                        }, void 0, false, {
-                            fileName: "src/App.js",
-                            lineNumber: 38,
+                            lineNumber: 41,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -22460,31 +22454,31 @@ function App() {
                             component: (0, _homeDefault.default)
                         }, void 0, false, {
                             fileName: "src/App.js",
-                            lineNumber: 39,
+                            lineNumber: 43,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Redirect), {
                             to: "/"
                         }, void 0, false, {
                             fileName: "src/App.js",
-                            lineNumber: 40,
+                            lineNumber: 44,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "src/App.js",
-                    lineNumber: 31,
+                    lineNumber: 34,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "src/App.js",
-            lineNumber: 29,
+            lineNumber: 32,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "src/App.js",
-        lineNumber: 28,
+        lineNumber: 31,
         columnNumber: 5
     }, this);
 }
@@ -22498,7 +22492,7 @@ $RefreshReg$(_c, "App");
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","react-router-dom":"jr3zW","./components/NavBar":"dNMjD","./pages/Home":"4vy7i","./pages/Config":"eo2fO","./pages/Cadastrar":"5ymGc","./pages/Wifi":"9VUoY","./pages/Pppoe":"cw98F","./pages/Reboot":"9ldO3","./pages/FactoryReset":"blF5h","./pages/Params":"5Szee","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"jr3zW":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","react-router-dom":"jr3zW","./components/NavBar":"dNMjD","./pages/Home":"4vy7i","./pages/Config":"eo2fO","./pages/Cadastrar":"5ymGc","./pages/Wifi":"9VUoY","./pages/Pppoe":"cw98F","./pages/Reboot":"9ldO3","./pages/FactoryReset":"blF5h","./pages/Params":"5Szee","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi","./pages/DashboardLive":"bPsU2"}],"jr3zW":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MemoryRouter", ()=>(0, _reactRouter.MemoryRouter));
@@ -25555,18 +25549,6 @@ var _s = $RefreshSig$();
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
-                        to: "/cadastrar",
-                        style: {
-                            color: 'white',
-                            textDecoration: 'none'
-                        },
-                        children: "Cadastrar"
-                    }, void 0, false, {
-                        fileName: "src/components/NavBar.js",
-                        lineNumber: 16,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
                         to: "/wifi",
                         style: {
                             color: 'white',
@@ -25615,12 +25597,12 @@ var _s = $RefreshSig$();
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
-                        to: "/params",
+                        to: "/dashboard-live",
                         style: {
                             color: 'white',
                             textDecoration: 'none'
                         },
-                        children: "Par\xe2metros"
+                        children: "Dashboard"
                     }, void 0, false, {
                         fileName: "src/components/NavBar.js",
                         lineNumber: 21,
@@ -25636,7 +25618,7 @@ var _s = $RefreshSig$();
                 children: keyStatus
             }, void 0, false, {
                 fileName: "src/components/NavBar.js",
-                lineNumber: 23,
+                lineNumber: 24,
                 columnNumber: 7
             }, this)
         ]
@@ -28454,24 +28436,58 @@ $RefreshReg$(_c, "Cadastrar");
 }
 },{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","../App":"hh6uc","../utils/api":"a6eMi","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"a6eMi":[function(require,module,exports,__globalThis) {
 // src/utils/api.js
+//
+// Utilitários para o frontend (HTTP + SSE) compatível com seu sendRequest antigo.
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getBackendUrl", ()=>getBackendUrl);
 /**
- * Envia requisição ao backend FastAPI.
+ * sendRequest – retrocompatível com a sua assinatura antiga.
  *
- * Uso recomendado:
+ * Exemplo novo:
  *   sendRequest('POST', '/devices/<id>/wifi', {
  *     body: { ssid, password },
  *     query: { connection_request: true },
  *     apiKey: '...'
  *   })
  *
- * Retrocompatível com a forma antiga:
+ * Exemplo antigo (continua funcionando):
  *   sendRequest('POST', '/devices/<id>/wifi', {ssid, password}, {connection_request: true}, 'apiKey')
  */ parcelHelpers.export(exports, "sendRequest", ()=>sendRequest);
+/* ===== Métricas ===== */ parcelHelpers.export(exports, "getMetricsOverview", ()=>getMetricsOverview);
+parcelHelpers.export(exports, "openMetricsStream", ()=>openMetricsStream);
+/* ===== Lista de devices ===== */ parcelHelpers.export(exports, "listDevices", ()=>listDevices);
 function getBackendUrl() {
     return localStorage.getItem('genieacs_backend_url') || 'http://localhost:8000';
+}
+function getDefaultApiKey() {
+    return localStorage.getItem('genieacs_api_key') || '';
+}
+function toQueryString(obj = {}) {
+    const entries = [];
+    for (const [k, v] of Object.entries(obj)){
+        if (v === undefined || v === null) continue;
+        if (typeof v === 'string' && v.trim() === '') continue;
+        if (typeof v === 'boolean') entries.push([
+            k,
+            v ? 'true' : 'false'
+        ]);
+        else entries.push([
+            k,
+            String(v)
+        ]);
+    }
+    return new URLSearchParams(entries).toString();
+}
+async function getJSON(pathWithQuery, apiKey) {
+    const base = getBackendUrl();
+    const resp = await fetch(`${base}${pathWithQuery}`, {
+        headers: {
+            'X-API-Key': apiKey || getDefaultApiKey()
+        }
+    });
+    if (!resp.ok) throw new Error(await resp.text().catch(()=>`HTTP ${resp.status}`));
+    return resp.json();
 }
 async function sendRequest(method, path, arg3, arg4, arg5) {
     let body, query, apiKey;
@@ -28486,17 +28502,12 @@ async function sendRequest(method, path, arg3, arg4, arg5) {
         apiKey = arg5;
     }
     const baseUrl = getBackendUrl();
-    const qs = new URLSearchParams(Object.entries(query).flatMap(([k, v])=>v === undefined || v === null ? [] : [
-            [
-                k,
-                String(v)
-            ]
-        ])).toString();
+    const qs = toQueryString(query);
     const url = `${baseUrl}${path}${qs ? `?${qs}` : ''}`;
     const headers = {
         'Content-Type': 'application/json'
     };
-    const key = apiKey || localStorage.getItem('genieacs_api_key');
+    const key = apiKey || getDefaultApiKey();
     if (key) headers['X-API-Key'] = key;
     const resp = await fetch(url, {
         method,
@@ -28507,7 +28518,26 @@ async function sendRequest(method, path, arg3, arg4, arg5) {
         const text = await resp.text().catch(()=>'');
         throw new Error(text || `HTTP ${resp.status}`);
     }
-    return resp.json();
+    const ct = resp.headers.get('content-type') || '';
+    return ct.includes('application/json') ? resp.json() : null;
+}
+async function getMetricsOverview(apiKey, params = {}) {
+    const qs = toQueryString(params);
+    return getJSON(`/metrics/overview${qs ? `?${qs}` : ''}`, apiKey);
+}
+function openMetricsStream(apiKey, params = {}) {
+    const base = getBackendUrl();
+    const qs = toQueryString({
+        token: apiKey || getDefaultApiKey(),
+        interval: params.interval ?? 5,
+        window_online_sec: params.window_online_sec ?? 600,
+        window_24h_sec: params.window_24h_sec ?? 86400
+    });
+    return new EventSource(`${base}/metrics/stream?${qs}`);
+}
+async function listDevices(apiKey, params = {}) {
+    const qs = toQueryString(params);
+    return getJSON(`/devices/list${qs ? `?${qs}` : ''}`, apiKey);
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"9VUoY":[function(require,module,exports,__globalThis) {
@@ -29522,6 +29552,753 @@ var _c;
 $RefreshReg$(_c, "Params");
 
   $parcel$ReactRefreshHelpers$c40b.postlude(module);
+} finally {
+  globalThis.$RefreshReg$ = prevRefreshReg;
+  globalThis.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","../App":"hh6uc","../utils/api":"a6eMi","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"bPsU2":[function(require,module,exports,__globalThis) {
+var $parcel$ReactRefreshHelpers$205f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+$parcel$ReactRefreshHelpers$205f.init();
+var prevRefreshReg = globalThis.$RefreshReg$;
+var prevRefreshSig = globalThis.$RefreshSig$;
+$parcel$ReactRefreshHelpers$205f.prelude(module);
+
+try {
+// src/pages/Dashboard.jsx
+//
+// Página única: cards (SSE) + tabela de devices (filtros/paginação)
+// Usa ApiKeyContext do seu App.
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>Dashboard);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _app = require("../App");
+var _api = require("../utils/api");
+var _s = $RefreshSig$();
+function Dashboard() {
+    _s();
+    const { apiKey } = (0, _react.useContext)((0, _app.ApiKeyContext));
+    /* ========= Cards via SSE ========= */ const [overview, setOverview] = (0, _react.useState)(null);
+    const [sseError, setSseError] = (0, _react.useState)('');
+    const esRef = (0, _react.useRef)(null);
+    (0, _react.useEffect)(()=>{
+        if (!apiKey) {
+            setSseError('Defina sua API Key em Config.');
+            return;
+        }
+        const es = (0, _api.openMetricsStream)(apiKey, {
+            interval: 5,
+            window_online_sec: 600
+        });
+        esRef.current = es;
+        const onOverview = (evt)=>{
+            try {
+                setOverview(JSON.parse(evt.data));
+                setSseError('');
+            } catch  {
+                setSseError('Falha ao parsear evento SSE');
+            }
+        };
+        es.addEventListener('overview', onOverview);
+        es.onerror = ()=>setSseError("Conex\xe3o SSE caiu (recarregue a p\xe1gina)");
+        return ()=>{
+            es.removeEventListener('overview', onOverview);
+            es.close();
+        };
+    }, [
+        apiKey
+    ]);
+    /* ========= Lista de devices ========= */ const [rows, setRows] = (0, _react.useState)([]);
+    const [total, setTotal] = (0, _react.useState)(0);
+    const [page, setPage] = (0, _react.useState)(1);
+    const [pageSize, setPageSize] = (0, _react.useState)(25);
+    const [search, setSearch] = (0, _react.useState)('');
+    const [tag, setTag] = (0, _react.useState)('');
+    const [productClass, setProductClass] = (0, _react.useState)('');
+    const [onlyOnline, setOnlyOnline] = (0, _react.useState)(false);
+    const [onlineWithin, setOnlineWithin] = (0, _react.useState)(600);
+    const [sortBy, setSortBy] = (0, _react.useState)('_lastInform');
+    const [order, setOrder] = (0, _react.useState)('desc');
+    const [listError, setListError] = (0, _react.useState)('');
+    const [loading, setLoading] = (0, _react.useState)(false);
+    const [auto, setAuto] = (0, _react.useState)(true);
+    const params = (0, _react.useMemo)(()=>({
+            page,
+            page_size: pageSize,
+            search: search || undefined,
+            tag: tag || undefined,
+            product_class: productClass || undefined,
+            only_online: onlyOnline,
+            online_within_sec: onlineWithin,
+            sort_by: sortBy,
+            order
+        }), [
+        page,
+        pageSize,
+        search,
+        tag,
+        productClass,
+        onlyOnline,
+        onlineWithin,
+        sortBy,
+        order
+    ]);
+    // Helper para render seguro (nunca mostrar [object Object])
+    const show = (v)=>v === null || v === undefined || v === '' ? '-' : typeof v === 'object' ? '-' : v;
+    (0, _react.useEffect)(()=>{
+        if (!apiKey) {
+            setListError('Defina sua API Key em Config.');
+            return;
+        }
+        let stop = false;
+        async function load() {
+            try {
+                setLoading(true);
+                const data = await (0, _api.listDevices)(apiKey, params);
+                if (!stop) {
+                    setRows(data.items || []);
+                    setTotal(data.total || 0);
+                    setListError('');
+                }
+            } catch (e) {
+                if (!stop) setListError(String(e.message || e));
+            } finally{
+                if (!stop) setLoading(false);
+            }
+        }
+        load();
+        if (!auto) return ()=>{
+            stop = true;
+        };
+        const id = setInterval(load, 5000);
+        return ()=>{
+            stop = true;
+            clearInterval(id);
+        };
+    }, [
+        apiKey,
+        params,
+        auto
+    ]);
+    const totalPages = Math.max(1, Math.ceil(total / pageSize));
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        style: {
+            maxWidth: 1150,
+            margin: '1rem auto',
+            padding: '1rem'
+        },
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                children: "Dashboard (ao vivo via SSE)"
+            }, void 0, false, {
+                fileName: "src/pages/DashboardLive.js",
+                lineNumber: 92,
+                columnNumber: 7
+            }, this),
+            sseError && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Banner, {
+                type: "error",
+                children: sseError
+            }, void 0, false, {
+                fileName: "src/pages/DashboardLive.js",
+                lineNumber: 94,
+                columnNumber: 20
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                style: {
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(4, 1fr)',
+                    gap: 12,
+                    margin: '12px 0'
+                },
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Card, {
+                        title: "Total",
+                        value: overview?.total_devices ?? "\u2026"
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 96,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Card, {
+                        title: "Online (10min)",
+                        value: overview?.online_now ?? "\u2026"
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 97,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Card, {
+                        title: "Ativos (24h)",
+                        value: overview?.active_24h ?? "\u2026"
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 98,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Card, {
+                        title: "Offline (24h)",
+                        value: overview?.offline_24h ?? "\u2026"
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 99,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/pages/DashboardLive.js",
+                lineNumber: 95,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h3", {
+                style: {
+                    marginTop: 24
+                },
+                children: "Devices"
+            }, void 0, false, {
+                fileName: "src/pages/DashboardLive.js",
+                lineNumber: 102,
+                columnNumber: 7
+            }, this),
+            listError && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Banner, {
+                type: "error",
+                children: listError
+            }, void 0, false, {
+                fileName: "src/pages/DashboardLive.js",
+                lineNumber: 103,
+                columnNumber: 21
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                style: {
+                    display: 'grid',
+                    gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr',
+                    gap: 8,
+                    margin: '8px 0'
+                },
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        placeholder: "Buscar por ID (regex)",
+                        value: search,
+                        onChange: (e)=>{
+                            setPage(1);
+                            setSearch(e.target.value);
+                        }
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 106,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        placeholder: "Tag",
+                        value: tag,
+                        onChange: (e)=>{
+                            setPage(1);
+                            setTag(e.target.value);
+                        }
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 108,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                        placeholder: "ProductClass",
+                        value: productClass,
+                        onChange: (e)=>{
+                            setPage(1);
+                            setProductClass(e.target.value);
+                        }
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 110,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("select", {
+                        value: onlineWithin,
+                        onChange: (e)=>setOnlineWithin(Number(e.target.value)),
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                value: 300,
+                                children: "Online (5 min)"
+                            }, void 0, false, {
+                                fileName: "src/pages/DashboardLive.js",
+                                lineNumber: 113,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                value: 600,
+                                children: "Online (10 min)"
+                            }, void 0, false, {
+                                fileName: "src/pages/DashboardLive.js",
+                                lineNumber: 114,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                value: 900,
+                                children: "Online (15 min)"
+                            }, void 0, false, {
+                                fileName: "src/pages/DashboardLive.js",
+                                lineNumber: 115,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 112,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                        style: {
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 6
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                type: "checkbox",
+                                checked: onlyOnline,
+                                onChange: (e)=>{
+                                    setPage(1);
+                                    setOnlyOnline(e.target.checked);
+                                }
+                            }, void 0, false, {
+                                fileName: "src/pages/DashboardLive.js",
+                                lineNumber: 118,
+                                columnNumber: 11
+                            }, this),
+                            "Somente online"
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 117,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/pages/DashboardLive.js",
+                lineNumber: 105,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                style: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    marginBottom: 8
+                },
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                        onClick: ()=>setPage((p)=>Math.max(1, p - 1)),
+                        disabled: page <= 1,
+                        children: "\u25C0"
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 126,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                        children: [
+                            "P\xe1gina ",
+                            page,
+                            " / ",
+                            totalPages
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 127,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                        onClick: ()=>setPage((p)=>Math.min(totalPages, p + 1)),
+                        disabled: page >= totalPages,
+                        children: "\u25B6"
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 128,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("select", {
+                        value: pageSize,
+                        onChange: (e)=>{
+                            setPage(1);
+                            setPageSize(Number(e.target.value));
+                        },
+                        children: [
+                            10,
+                            25,
+                            50,
+                            100
+                        ].map((s)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                value: s,
+                                children: [
+                                    s,
+                                    " / p\xe1g"
+                                ]
+                            }, s, true, {
+                                fileName: "src/pages/DashboardLive.js",
+                                lineNumber: 130,
+                                columnNumber: 36
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 129,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("select", {
+                        value: sortBy,
+                        onChange: (e)=>setSortBy(e.target.value),
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                value: "_lastInform",
+                                children: "Ordenar por Last Inform"
+                            }, void 0, false, {
+                                fileName: "src/pages/DashboardLive.js",
+                                lineNumber: 133,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                value: "_id",
+                                children: "Ordenar por ID"
+                            }, void 0, false, {
+                                fileName: "src/pages/DashboardLive.js",
+                                lineNumber: 134,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 132,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("select", {
+                        value: order,
+                        onChange: (e)=>setOrder(e.target.value),
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                value: "desc",
+                                children: "Desc"
+                            }, void 0, false, {
+                                fileName: "src/pages/DashboardLive.js",
+                                lineNumber: 137,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
+                                value: "asc",
+                                children: "Asc"
+                            }, void 0, false, {
+                                fileName: "src/pages/DashboardLive.js",
+                                lineNumber: 138,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 136,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                        style: {
+                            marginLeft: 'auto'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                type: "checkbox",
+                                checked: auto,
+                                onChange: (e)=>setAuto(e.target.checked)
+                            }, void 0, false, {
+                                fileName: "src/pages/DashboardLive.js",
+                                lineNumber: 141,
+                                columnNumber: 11
+                            }, this),
+                            " Auto refresh (5s)"
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 140,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                        onClick: ()=>setPage((p)=>p),
+                        disabled: loading,
+                        children: "Atualizar"
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 143,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/pages/DashboardLive.js",
+                lineNumber: 125,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("table", {
+                style: {
+                    width: '100%',
+                    borderCollapse: 'collapse',
+                    background: 'white',
+                    border: '1px solid #eee',
+                    borderRadius: 8
+                },
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("thead", {
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tr", {
+                            style: {
+                                background: '#f7f9fc'
+                            },
+                            children: [
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Th, {
+                                    children: "ID"
+                                }, void 0, false, {
+                                    fileName: "src/pages/DashboardLive.js",
+                                    lineNumber: 150,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Th, {
+                                    children: "Online"
+                                }, void 0, false, {
+                                    fileName: "src/pages/DashboardLive.js",
+                                    lineNumber: 151,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Th, {
+                                    children: "Last Inform (UTC)"
+                                }, void 0, false, {
+                                    fileName: "src/pages/DashboardLive.js",
+                                    lineNumber: 152,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Th, {
+                                    children: "Product"
+                                }, void 0, false, {
+                                    fileName: "src/pages/DashboardLive.js",
+                                    lineNumber: 153,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Th, {
+                                    children: "SW"
+                                }, void 0, false, {
+                                    fileName: "src/pages/DashboardLive.js",
+                                    lineNumber: 154,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Th, {
+                                    children: "SSID"
+                                }, void 0, false, {
+                                    fileName: "src/pages/DashboardLive.js",
+                                    lineNumber: 155,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/pages/DashboardLive.js",
+                            lineNumber: 149,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 148,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tbody", {
+                        children: [
+                            rows.map((r, i)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tr", {
+                                    style: {
+                                        borderTop: '1px solid #eee'
+                                    },
+                                    children: [
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Td, {
+                                            mono: true,
+                                            children: show(r.device_id)
+                                        }, void 0, false, {
+                                            fileName: "src/pages/DashboardLive.js",
+                                            lineNumber: 161,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Td, {
+                                            children: r.online ? "\uD83D\uDFE2" : "\u26AA"
+                                        }, void 0, false, {
+                                            fileName: "src/pages/DashboardLive.js",
+                                            lineNumber: 162,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Td, {
+                                            mono: true,
+                                            children: show(r.last_inform)
+                                        }, void 0, false, {
+                                            fileName: "src/pages/DashboardLive.js",
+                                            lineNumber: 163,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Td, {
+                                            children: show(r.product_class)
+                                        }, void 0, false, {
+                                            fileName: "src/pages/DashboardLive.js",
+                                            lineNumber: 164,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Td, {
+                                            children: show(r.software_version)
+                                        }, void 0, false, {
+                                            fileName: "src/pages/DashboardLive.js",
+                                            lineNumber: 165,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Td, {
+                                            children: show(r.ssid)
+                                        }, void 0, false, {
+                                            fileName: "src/pages/DashboardLive.js",
+                                            lineNumber: 166,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, i, true, {
+                                    fileName: "src/pages/DashboardLive.js",
+                                    lineNumber: 160,
+                                    columnNumber: 13
+                                }, this)),
+                            !rows.length && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("tr", {
+                                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+                                    colSpan: 6,
+                                    style: {
+                                        padding: 16,
+                                        textAlign: 'center',
+                                        color: '#777'
+                                    },
+                                    children: loading ? "Carregando\u2026" : 'Sem resultados'
+                                }, void 0, false, {
+                                    fileName: "src/pages/DashboardLive.js",
+                                    lineNumber: 170,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "src/pages/DashboardLive.js",
+                                lineNumber: 170,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/pages/DashboardLive.js",
+                        lineNumber: 158,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/pages/DashboardLive.js",
+                lineNumber: 147,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "src/pages/DashboardLive.js",
+        lineNumber: 91,
+        columnNumber: 5
+    }, this);
+}
+_s(Dashboard, "vHA5eqUnqp1Mfe7XxE7hJIOqmC4=");
+_c = Dashboard;
+/* ---- UI helpers ---- */ function Card({ title, value }) {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        style: {
+            background: 'white',
+            border: '1px solid #eee',
+            borderRadius: 8,
+            padding: 16,
+            textAlign: 'center',
+            boxShadow: '0 1px 2px rgba(0,0,0,.04)'
+        },
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                style: {
+                    fontSize: 12,
+                    color: '#666'
+                },
+                children: title
+            }, void 0, false, {
+                fileName: "src/pages/DashboardLive.js",
+                lineNumber: 184,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                style: {
+                    fontSize: 28,
+                    fontWeight: 700
+                },
+                children: value
+            }, void 0, false, {
+                fileName: "src/pages/DashboardLive.js",
+                lineNumber: 185,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "src/pages/DashboardLive.js",
+        lineNumber: 183,
+        columnNumber: 5
+    }, this);
+}
+_c1 = Card;
+function Banner({ children, type = 'info' }) {
+    const colors = type === 'error' ? {
+        bg: '#fdecea',
+        border: '#f5c2c7'
+    } : {
+        bg: '#eef6ff',
+        border: '#b6daff'
+    };
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        style: {
+            padding: '0.75rem',
+            background: colors.bg,
+            border: `1px solid ${colors.border}`,
+            borderRadius: 6
+        },
+        children: children
+    }, void 0, false, {
+        fileName: "src/pages/DashboardLive.js",
+        lineNumber: 194,
+        columnNumber: 5
+    }, this);
+}
+_c2 = Banner;
+function Th({ children }) {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("th", {
+        style: {
+            textAlign: 'left',
+            padding: 8,
+            fontSize: 12,
+            color: '#666'
+        },
+        children: children
+    }, void 0, false, {
+        fileName: "src/pages/DashboardLive.js",
+        lineNumber: 200,
+        columnNumber: 10
+    }, this);
+}
+_c3 = Th;
+function Td({ children, mono }) {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("td", {
+        style: {
+            padding: 8,
+            fontFamily: mono ? 'ui-monospace, SFMono-Regular, Menlo, monospace' : undefined
+        },
+        children: children
+    }, void 0, false, {
+        fileName: "src/pages/DashboardLive.js",
+        lineNumber: 203,
+        columnNumber: 10
+    }, this);
+}
+_c4 = Td;
+var _c, _c1, _c2, _c3, _c4;
+$RefreshReg$(_c, "Dashboard");
+$RefreshReg$(_c1, "Card");
+$RefreshReg$(_c2, "Banner");
+$RefreshReg$(_c3, "Th");
+$RefreshReg$(_c4, "Td");
+
+  $parcel$ReactRefreshHelpers$205f.postlude(module);
 } finally {
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;

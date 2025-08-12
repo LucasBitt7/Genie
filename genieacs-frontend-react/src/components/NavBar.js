@@ -13,12 +13,13 @@ function NavBar() {
       <div style={{ display: 'flex', gap: '1rem' }}>
         <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
         <Link to="/config" style={{ color: 'white', textDecoration: 'none' }}>Config</Link>
-        <Link to="/cadastrar" style={{ color: 'white', textDecoration: 'none' }}>Cadastrar</Link>
+        {/* <Link to="/cadastrar" style={{ color: 'white', textDecoration: 'none' }}>Cadastrar</Link> */}
         <Link to="/wifi" style={{ color: 'white', textDecoration: 'none' }}>Wi‑Fi</Link>
         <Link to="/pppoe" style={{ color: 'white', textDecoration: 'none' }}>PPPoE</Link>
         <Link to="/reboot" style={{ color: 'white', textDecoration: 'none' }}>Reboot</Link>
         <Link to="/factory-reset" style={{ color: 'white', textDecoration: 'none' }}>Reset</Link>
-        <Link to="/params" style={{ color: 'white', textDecoration: 'none' }}>Parâmetros</Link>
+        <Link to="/dashboard-live" style={{ color: 'white', textDecoration: 'none' }}>Dashboard</Link>
+        {/* <Link to="/params" style={{ color: 'white', textDecoration: 'none' }}>Parâmetros</Link> */}
       </div>
       <div>{keyStatus}</div>
     </div>

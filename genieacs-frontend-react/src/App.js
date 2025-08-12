@@ -10,6 +10,9 @@ import Pppoe from './pages/Pppoe';
 import Reboot from './pages/Reboot';
 import FactoryReset from './pages/FactoryReset';
 import Params from './pages/Params';
+import DashboardLive from './pages/DashboardLive';
+// ...
+
 
 export const ApiKeyContext = createContext();
 
@@ -30,12 +33,13 @@ export default function App() {
         <NavBar />
         <Switch>
           <Route path="/config" component={Config} />
-          <Route path="/cadastrar" component={Cadastrar} />
+          {/* <Route path="/cadastrar" component={Cadastrar} /> */}
+          <Route path="/dashboard-live" component={DashboardLive} />
           <Route path="/wifi" component={Wifi} />
           <Route path="/pppoe" component={Pppoe} />
           <Route path="/reboot" component={Reboot} />
           <Route path="/factory-reset" component={FactoryReset} />
-          <Route path="/params" component={Params} />
+          {/* <Route path="/params" component={Params} /> */}
           <Route exact path="/" component={Home} />
           <Redirect to="/" />
         </Switch>
