@@ -1,9 +1,10 @@
+// src/pages/Wifi.jsx
 import React, { useContext, useState } from 'react';
 import { ApiKeyContext } from '../App';
 import { sendRequest } from '../utils/api';
 
 /**
- * Página para alterar apenas o Wi‑Fi.
+ * Página para alterar o Wi-Fi (com opção de reboot como no script).
  */
 function Wifi() {
   const { apiKey } = useContext(ApiKeyContext);
@@ -11,7 +12,10 @@ function Wifi() {
   const [ssid, setSsid] = useState('');
   const [wifiPass, setWifiPass] = useState('');
   const [connReq, setConnReq] = useState(true);
+  const [alsoReboot, setAlsoReboot] = useState(true);    // novo
+  const [crTimeout, setCrTimeout] = useState(10);        // novo (segundos)
   const [response, setResponse] = useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!apiKey) {
@@ -20,18 +24,24 @@ function Wifi() {
     }
     setResponse('Enviando...');
     try {
-      const result = await sendRequest('POST', `/devices/${encodeURIComponent(deviceId)}/wifi`, {
-        ssid: ssid,
-        password: wifiPass
-      }, { connection_request: connReq }, apiKey);
-      setResponse('Task enviada. ID: ' + result._id);
+      const path = alsoReboot
+        ? `/devices/${encodeURIComponent(deviceId)}/wifi_and_reboot`
+        : `/devices/${encodeURIComponent(deviceId)}/wifi`;
+
+      const result = await sendRequest('POST', path, {
+        body: { ssid, password: wifiPass },
+        query: { connection_request: connReq, cr_timeout: crTimeout },
+        apiKey
+      });
+      setResponse('OK:\n' + JSON.stringify(result, null, 2));
     } catch (err) {
       setResponse('Erro: ' + err.message);
     }
   };
+
   return (
     <div style={{ maxWidth: '600px', margin: '1rem auto', padding: '1.5rem', background: 'white', borderRadius: '4px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-      <h2>Alterar Wi‑Fi</h2>
+      <h2>Alterar Wi-Fi</h2>
       <form onSubmit={handleSubmit}>
         <label>ID do dispositivo</label>
         <input type="text" value={deviceId} onChange={(e) => setDeviceId(e.target.value)} required style={inputStyle} />
@@ -39,12 +49,31 @@ function Wifi() {
         <input type="text" value={ssid} onChange={(e) => setSsid(e.target.value)} required style={inputStyle} />
         <label>Senha</label>
         <input type="password" value={wifiPass} onChange={(e) => setWifiPass(e.target.value)} required style={inputStyle} />
-        <label>
-          <input type="checkbox" checked={connReq} onChange={(e) => setConnReq(e.target.checked)} /> Connection Request imediato
+
+        <label style={{ display: 'block', marginTop: '0.5rem' }}>
+          <input type="checkbox" checked={connReq} onChange={(e) => setConnReq(e.target.checked)} />
+          &nbsp;Tentar Connection Request imediato
         </label>
+
+        <label style={{ display: 'block', marginTop: '0.5rem' }}>
+          Timeout CR (s)
+          <input
+            type="number"
+            min="0"
+            value={crTimeout}
+            onChange={(e) => setCrTimeout(parseInt(e.target.value || '0', 10))}
+            style={{ ...inputStyle, width: '120px' }}
+          />
+        </label>
+
+        <label style={{ display: 'block', marginTop: '0.5rem' }}>
+          <input type="checkbox" checked={alsoReboot} onChange={(e) => setAlsoReboot(e.target.checked)} />
+          &nbsp;Reboot após aplicar
+        </label>
+
         <button type="submit" style={buttonStyle}>Enviar</button>
       </form>
-      {response && <div style={responseStyle}>{response}</div>}
+      {response && <pre style={responseStyle}>{response}</pre>}
     </div>
   );
 }

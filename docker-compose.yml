@@ -1,5 +1,3 @@
-version: "3.9"
-
 ###############################################################################
 # GenieACS – serviços principais                                              #
 ###############################################################################
@@ -22,9 +20,6 @@ services:
     networks:
       - genieacs_net
 
-###############################################################################
-# MongoDB                                                                     #
-###############################################################################
   mongo:
     image: mongo:8.0
     container_name: mongo-genieacs
@@ -37,22 +32,20 @@ services:
     networks:
       - genieacs_net
 
-###############################################################################
-# Simulador CPE – 5 roteadores no mesmo contêiner                             #
-###############################################################################
+  #############################################################################
+  # Simulador CPE – 5 roteadores no mesmo contêiner                           #
+  #############################################################################
   genieacs-sim:
     image: drumsergio/genieacs-sim:latest
+    container_name: genieacs-sim
     depends_on:
       - genieacs
     command: >-
       genieacs-sim --processes 5 --serial 100 --acs-url http://genieacs:7547
-    restart: on-failure
+    restart: always          # (sugestão: 'always' para não “sumir” ao reiniciar)
     networks:
       - genieacs_net
 
-###############################################################################
-# MCP – painel multi-provedor (opcional)                                      #
-###############################################################################
   genieacs-mcp:
     image: drumsergio/genieacs-mcp:latest
     container_name: genieacs-mcp
@@ -67,44 +60,38 @@ services:
     networks:
       - genieacs_net
 
-###############################################################################
-# Backend FastAPI                                                             #
-###############################################################################
   backend:
     build:
       context: .
-      dockerfile: Dockerfile.backend
+      dockerfile: backend/Dockerfile.backend
     container_name: genieacs-backend
     restart: always
     depends_on:
       - genieacs
     environment:
       GENIEACS_NBI_URL: http://genieacs:7557
-      GENIEACS_API_KEY_FILE: /run/secrets/genieacs_api_key   # ← opcional (usado pelo entrypoint)
+      ACS_API_KEY_FILE: /run/secrets/genieacs_api_key
+      FRONTEND_ORIGINS: http://localhost:1234,http://127.0.0.1:1234
     secrets:
-      - genieacs_api_key                                     # ← vínculo do secret ao serviço
+      - genieacs_api_key
     ports:
-      - "8000:8000"           # docs em http://localhost:8000/docs
+      - "8000:8000"
     networks:
       - genieacs_net
+    volumes:
+      - ./backend/genieacs_backend_mvp.py:/app/genieacs_backend_mvp.py:ro
 
 ###############################################################################
-# Volumes persistentes                                                        #
+# Volumes e rede                                                              #
 ###############################################################################
 volumes:
   data_db:
   data_configdb:
 
-###############################################################################
-# Rede compartilhada                                                          #
-###############################################################################
 networks:
   genieacs_net:
     driver: bridge
 
-###############################################################################
-# Segredo com a API-Key                                                       #
-###############################################################################
 secrets:
   genieacs_api_key:
     file: ./secrets/genieacs_api_key.txt

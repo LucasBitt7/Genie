@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 acs_client.py
 Pequena biblioteca que encapsula chamadas ao backend FastAPI (genieacs_backend_mvp).
@@ -29,7 +30,7 @@ def _post(endpoint: str, payload: dict, params: Optional[dict] = None) -> dict:
     """
     url = f"{BACKEND_URL}{endpoint}"
     resp = requests.post(
-        url, json=payload, params=params, headers={"X-API-Key": API_KEY}
+        url, json=payload, params=params, headers={"X-API-Key": API_KEY}, timeout=90
     )
     resp.raise_for_status()
     return resp.json()
@@ -41,6 +42,10 @@ def wifi(device_id: str, ssid: str, password: str,
          connection_request: bool = False) -> dict:
     """
     Altera SSID e senha Wi-Fi no CPE.
+    - device_id: ID do CPE no ACS.
+    - ssid: novo nome da rede Wi-Fi.
+    - password: nova senha.
+    - connection_request: se True, tenta execução imediata (default: False, igual ao seu uso antigo).
     """
     return _post(f"/devices/{device_id}/wifi",
                  {"ssid": ssid, "password": password},
@@ -51,7 +56,8 @@ def pppoe(device_id: str, username: str, password: str,
           enable: bool = True,
           connection_request: bool = False) -> dict:
     """
-    Atualiza credenciais PPPoE; por padrão já habilita a interface.
+    Atualiza credenciais PPPoE.
+    - enable: habilita a conexão PPPoE (True por padrão).
     """
     return _post(f"/devices/{device_id}/pppoe",
                  {"username": username, "password": password},
@@ -69,7 +75,7 @@ def reboot(device_id: str, connection_request: bool = False) -> dict:
 
 def factory_reset(device_id: str, connection_request: bool = False) -> dict:
     """
-    Restaura configurações de fábrica do CPE.
+    Restaura o CPE para padrões de fábrica.
     """
     return _post(f"/devices/{device_id}/factory_reset", {},
                  {"connection_request": str(connection_request).lower()})
@@ -78,7 +84,8 @@ def factory_reset(device_id: str, connection_request: bool = False) -> dict:
 def get_params(device_id: str, names: List[str],
                connection_request: bool = False) -> dict:
     """
-    Solicita valores atuais de parâmetros TR-069.
+    Solicita valores atuais de parâmetros TR-069 (getParameterValues).
+    - names: lista de paths TR-069 (ex.: ["InternetGatewayDevice....SSID"])
     """
     return _post(f"/devices/{device_id}/parameters",
                  {"parameter_names": names},

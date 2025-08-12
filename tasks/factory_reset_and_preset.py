@@ -8,7 +8,7 @@ factory_reset_and_apply.py
 import time, acs_client as acs
 import requests, urllib.parse, json
 
-DEVICE = "202BC1-BM632w-000100"
+DEVICE = "202BC1-BM632w-000103"
 NBI    = "http://localhost:7557"
 
 print("Enviando factory reset…")

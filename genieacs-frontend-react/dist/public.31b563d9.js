@@ -22344,7 +22344,7 @@ var prevRefreshSig = globalThis.$RefreshSig$;
 $parcel$ReactRefreshHelpers$4089.prelude(module);
 
 try {
-// src/App.js (trecho essencial)
+// src/App.js
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ApiKeyContext", ()=>ApiKeyContext);
@@ -28454,24 +28454,37 @@ $RefreshReg$(_c, "Cadastrar");
 }
 },{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","../App":"hh6uc","../utils/api":"a6eMi","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"a6eMi":[function(require,module,exports,__globalThis) {
 // src/utils/api.js
-/**
- * Lê o BASE URL do backend do ACS de localStorage.
- * Fallback: http://localhost:8000
- */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getBackendUrl", ()=>getBackendUrl);
 /**
  * Envia requisição ao backend FastAPI.
- * - method: 'POST' | 'GET' | ...
- * - path: ex. '/devices/<id>/wifi'
- * - options.query: objeto de querystring (ex. { connection_request: true })
- * - options.body: objeto JSON (ex. { ssid, password })
- * - options.apiKey: opcional; se não vier, pegamos do localStorage
+ *
+ * Uso recomendado:
+ *   sendRequest('POST', '/devices/<id>/wifi', {
+ *     body: { ssid, password },
+ *     query: { connection_request: true },
+ *     apiKey: '...'
+ *   })
+ *
+ * Retrocompatível com a forma antiga:
+ *   sendRequest('POST', '/devices/<id>/wifi', {ssid, password}, {connection_request: true}, 'apiKey')
  */ parcelHelpers.export(exports, "sendRequest", ()=>sendRequest);
 function getBackendUrl() {
     return localStorage.getItem('genieacs_backend_url') || 'http://localhost:8000';
 }
-async function sendRequest(method, path, { query = {}, body, apiKey } = {}) {
+async function sendRequest(method, path, arg3, arg4, arg5) {
+    let body, query, apiKey;
+    const looksLikeOptionsObject = arg3 && typeof arg3 === 'object' && (Object.prototype.hasOwnProperty.call(arg3, 'body') || Object.prototype.hasOwnProperty.call(arg3, 'query') || Object.prototype.hasOwnProperty.call(arg3, 'apiKey'));
+    if (looksLikeOptionsObject) {
+        body = arg3.body;
+        query = arg3.query || {};
+        apiKey = arg3.apiKey;
+    } else {
+        body = arg3;
+        query = arg4 || {};
+        apiKey = arg5;
+    }
     const baseUrl = getBackendUrl();
     const qs = new URLSearchParams(Object.entries(query).flatMap(([k, v])=>v === undefined || v === null ? [] : [
             [
@@ -28505,6 +28518,7 @@ var prevRefreshSig = globalThis.$RefreshSig$;
 $parcel$ReactRefreshHelpers$e9aa.prelude(module);
 
 try {
+// src/pages/Wifi.jsx
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
@@ -28514,7 +28528,7 @@ var _app = require("../App");
 var _api = require("../utils/api");
 var _s = $RefreshSig$();
 /**
- * Página para alterar apenas o Wi‑Fi.
+ * Página para alterar o Wi-Fi (com opção de reboot como no script).
  */ function Wifi() {
     _s();
     const { apiKey } = (0, _react.useContext)((0, _app.ApiKeyContext));
@@ -28522,6 +28536,8 @@ var _s = $RefreshSig$();
     const [ssid, setSsid] = (0, _react.useState)('');
     const [wifiPass, setWifiPass] = (0, _react.useState)('');
     const [connReq, setConnReq] = (0, _react.useState)(true);
+    const [alsoReboot, setAlsoReboot] = (0, _react.useState)(true); // novo
+    const [crTimeout, setCrTimeout] = (0, _react.useState)(10); // novo (segundos)
     const [response, setResponse] = (0, _react.useState)('');
     const handleSubmit = async (e)=>{
         e.preventDefault();
@@ -28531,13 +28547,19 @@ var _s = $RefreshSig$();
         }
         setResponse('Enviando...');
         try {
-            const result = await (0, _api.sendRequest)('POST', `/devices/${encodeURIComponent(deviceId)}/wifi`, {
-                ssid: ssid,
-                password: wifiPass
-            }, {
-                connection_request: connReq
-            }, apiKey);
-            setResponse('Task enviada. ID: ' + result._id);
+            const path = alsoReboot ? `/devices/${encodeURIComponent(deviceId)}/wifi_and_reboot` : `/devices/${encodeURIComponent(deviceId)}/wifi`;
+            const result = await (0, _api.sendRequest)('POST', path, {
+                body: {
+                    ssid,
+                    password: wifiPass
+                },
+                query: {
+                    connection_request: connReq,
+                    cr_timeout: crTimeout
+                },
+                apiKey
+            });
+            setResponse('OK:\n' + JSON.stringify(result, null, 2));
         } catch (err) {
             setResponse('Erro: ' + err.message);
         }
@@ -28553,10 +28575,10 @@ var _s = $RefreshSig$();
         },
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                children: "Alterar Wi\u2011Fi"
+                children: "Alterar Wi-Fi"
             }, void 0, false, {
                 fileName: "src/pages/Wifi.js",
-                lineNumber: 34,
+                lineNumber: 44,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
@@ -28566,7 +28588,7 @@ var _s = $RefreshSig$();
                         children: "ID do dispositivo"
                     }, void 0, false, {
                         fileName: "src/pages/Wifi.js",
-                        lineNumber: 36,
+                        lineNumber: 46,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -28577,14 +28599,14 @@ var _s = $RefreshSig$();
                         style: inputStyle
                     }, void 0, false, {
                         fileName: "src/pages/Wifi.js",
-                        lineNumber: 37,
+                        lineNumber: 47,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
                         children: "SSID"
                     }, void 0, false, {
                         fileName: "src/pages/Wifi.js",
-                        lineNumber: 38,
+                        lineNumber: 48,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -28595,14 +28617,14 @@ var _s = $RefreshSig$();
                         style: inputStyle
                     }, void 0, false, {
                         fileName: "src/pages/Wifi.js",
-                        lineNumber: 39,
+                        lineNumber: 49,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
                         children: "Senha"
                     }, void 0, false, {
                         fileName: "src/pages/Wifi.js",
-                        lineNumber: 40,
+                        lineNumber: 50,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -28613,10 +28635,14 @@ var _s = $RefreshSig$();
                         style: inputStyle
                     }, void 0, false, {
                         fileName: "src/pages/Wifi.js",
-                        lineNumber: 41,
+                        lineNumber: 51,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                        style: {
+                            display: 'block',
+                            marginTop: '0.5rem'
+                        },
                         children: [
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                                 type: "checkbox",
@@ -28624,14 +28650,63 @@ var _s = $RefreshSig$();
                                 onChange: (e)=>setConnReq(e.target.checked)
                             }, void 0, false, {
                                 fileName: "src/pages/Wifi.js",
-                                lineNumber: 43,
+                                lineNumber: 54,
                                 columnNumber: 11
                             }, this),
-                            " Connection Request imediato"
+                            "\xa0Tentar Connection Request imediato"
                         ]
                     }, void 0, true, {
                         fileName: "src/pages/Wifi.js",
-                        lineNumber: 42,
+                        lineNumber: 53,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                        style: {
+                            display: 'block',
+                            marginTop: '0.5rem'
+                        },
+                        children: [
+                            "Timeout CR (s)",
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                type: "number",
+                                min: "0",
+                                value: crTimeout,
+                                onChange: (e)=>setCrTimeout(parseInt(e.target.value || '0', 10)),
+                                style: {
+                                    ...inputStyle,
+                                    width: '120px'
+                                }
+                            }, void 0, false, {
+                                fileName: "src/pages/Wifi.js",
+                                lineNumber: 60,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/pages/Wifi.js",
+                        lineNumber: 58,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                        style: {
+                            display: 'block',
+                            marginTop: '0.5rem'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                type: "checkbox",
+                                checked: alsoReboot,
+                                onChange: (e)=>setAlsoReboot(e.target.checked)
+                            }, void 0, false, {
+                                fileName: "src/pages/Wifi.js",
+                                lineNumber: 70,
+                                columnNumber: 11
+                            }, this),
+                            "\xa0Reboot ap\xf3s aplicar"
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/pages/Wifi.js",
+                        lineNumber: 69,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -28640,31 +28715,31 @@ var _s = $RefreshSig$();
                         children: "Enviar"
                     }, void 0, false, {
                         fileName: "src/pages/Wifi.js",
-                        lineNumber: 45,
+                        lineNumber: 74,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/pages/Wifi.js",
-                lineNumber: 35,
+                lineNumber: 45,
                 columnNumber: 7
             }, this),
-            response && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            response && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("pre", {
                 style: responseStyle,
                 children: response
             }, void 0, false, {
                 fileName: "src/pages/Wifi.js",
-                lineNumber: 47,
+                lineNumber: 76,
                 columnNumber: 20
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/pages/Wifi.js",
-        lineNumber: 33,
+        lineNumber: 43,
         columnNumber: 5
     }, this);
 }
-_s(Wifi, "EX7WtmCgJHavcooJeC567VkpWsM=");
+_s(Wifi, "2dhqgsXA3aNCoc+XuTR0HmfB35M=");
 _c = Wifi;
 const inputStyle = {
     width: '100%',

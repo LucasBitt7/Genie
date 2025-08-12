@@ -1,4 +1,4 @@
-// src/App.js (trecho essencial)
+// src/App.js
 import React, { createContext, useEffect, useState } from 'react';
 import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import NavBar from './components/NavBar';
