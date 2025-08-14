@@ -12,11 +12,13 @@ services:
       GENIEACS_UI_JWT_SECRET: changeme
       GENIEACS_MONGODB_CONNECTION_URL: mongodb://mongo/genieacs?authSource=admin
       DEBUG: "cwmp:*"
+    # UI/NBI/FS apenas no host local (seguro). CWMP NÃO é exposto publicamente.
     ports:
-      - "7547:7547"   # CWMP – onde os CPEs se conectam
-      - "7557:7557"   # NBI  – REST API usada pelo backend
-      - "7567:7567"   # File-Server (firmware, etc.)
-      - "3000:3000"   # Interface Web
+      - "127.0.0.1:3000:3000"   # Interface Web (somente local)
+      - "127.0.0.1:7557:7557"   # NBI – REST API (somente local)
+      - "127.0.0.1:7567:7567"   # File-Server (somente local)
+    expose:
+      - "7547"                  # CWMP visível só na rede Docker (para o ngrok)
     networks:
       - genieacs_net
 
@@ -42,7 +44,7 @@ services:
       - genieacs
     command: >-
       genieacs-sim --processes 5 --serial 100 --acs-url http://genieacs:7547
-    restart: always          # (sugestão: 'always' para não “sumir” ao reiniciar)
+    restart: always          # mantém simuladores vivos em reinício
     networks:
       - genieacs_net
 
@@ -56,7 +58,7 @@ services:
       ACS_USER: admin
       ACS_PASS: admin
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"   # painel do MCP só local
     networks:
       - genieacs_net
 
@@ -75,11 +77,29 @@ services:
     secrets:
       - genieacs_api_key
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"   # backend exposto só local
     networks:
       - genieacs_net
     volumes:
       - ./backend/genieacs_backend_mvp.py:/app/genieacs_backend_mvp.py:ro
+
+  #############################################################################
+  # Túnel público para o CWMP (7547) – ngrok                                  #
+  # Gera uma URL HTTPS pública -> encaminha p/ http://genieacs:7547           #
+  #############################################################################
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok-acs
+    restart: unless-stopped
+    depends_on:
+      - genieacs
+    environment:
+      NGROK_AUTHTOKEN: "${NGROK_AUTHTOKEN}"   # obrigatório (crie .env)
+    command: ["http", "--log=stdout", "genieacs:7547"]  # forma em array (compatível)
+    networks:
+      - genieacs_net
+    ports:
+      - "4040:4040"                           # dashboard/API p/ ler a public_url
 
 ###############################################################################
 # Volumes e rede                                                              #
