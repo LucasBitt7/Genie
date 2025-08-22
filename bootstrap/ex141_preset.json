@@ -1,0 +1,21 @@
+{
+  "weight": 10,
+  "channel": "default",
+  "precondition": "{\"DeviceID.ProductClass\":\"EX141\"}",
+  "configurations": [
+    {
+      "type": "provision",
+      "name": "ex141_discovery",
+      "args": {
+        "interval": 60,
+        "setPeriodicTime": true,
+        "withStun": false,
+        "stunServer": "seu.ip.publico",
+        "stunPort": 3478,
+        "stunKeepalive": 30
+      }
+    }
+  ],
+  "schedule": "",
+  "events": { "0 BOOTSTRAP": true, "2 PERIODIC": true }
+}
