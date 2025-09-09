@@ -1,0 +1,103 @@
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: mongo-genieacs
+    restart: always
+    volumes:
+      - data_db:/data/db
+      - data_configdb:/data/configdb
+    expose:
+      - "27017"
+    networks:
+      - genieacs_net
+    logging:
+      driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  genieacs:
+    image: drumsergio/genieacs:latest
+    container_name: genieacs
+    restart: always
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+    environment:
+      # Conexão com o MongoDB (DB 'genieacs', authSource admin)
+      GENIEACS_MONGODB_CONNECTION_URL: mongodb://mongo/genieacs?authSource=admin
+
+      # Logs detalhados do GenieACS
+      DEBUG: "genieacs:*"
+
+      # Porta UDP de ORIGEM usada pelo ACS para Connection Request com STUN
+      GENIEACS_UDP_CONNECTION_REQUEST_PORT: "3478"
+      GENIEACS_CWMP_UDP_CONNECTION_REQUEST_PORT: "3478"   # extra por compatibilidade
+
+    ports:
+      # CWMP/TR-069 público (CPEs acessam por aqui)
+      - "7547:7547"
+
+      # UI/NBI/FS apenas via loopback (acesso por túnel SSH/local)
+      - "127.0.0.1:3000:3000"   # UI Web
+      - "127.0.0.1:7557:7557"   # NBI (API)
+      - "127.0.0.1:7567:7567"   # File Server
+
+      # Publish da 3478/udp continua pelo serviço 'genieacs'
+      - "3478:3478/udp"
+
+    networks:
+      - genieacs_net
+
+    logging:
+      driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # Sidecar STUN compartilhando o mesmo namespace de rede do 'genieacs'
+  stun:
+    image: coturn/coturn:latest
+    container_name: stun-server
+    network_mode: "container:genieacs"   # compartilha o MESMO namespace de rede
+    restart: always
+    command: >
+      turnserver -n
+        --stun-only
+        --no-auth
+        --no-tls --no-dtls --no-tcp
+        --listening-ip=0.0.0.0
+        --listening-port=3478
+        --verbose
+    logging:
+      driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.backend
+    container_name: genieacs-backend
+    restart: always
+    env_file:
+      - ./.backend.env
+    environment:
+      GENIEACS_NBI_URL: http://genieacs:7557
+    depends_on:
+      - genieacs
+    networks:
+      - genieacs_net
+    ports:
+      - "127.0.0.1:8000:8000"
+
+
+volumes:
+  data_db: {}
+  data_configdb: {}
+
+networks:
+  genieacs_net:
+    driver: bridge
